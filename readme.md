@@ -12,7 +12,6 @@ GenericApiClient is a flexible and easy-to-use C# library for making HTTP API ca
    cd GenericApiClient
    dotnet build
    dotnet pack
-   vhdl
 ```
    
 
