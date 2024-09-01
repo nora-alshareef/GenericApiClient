@@ -37,27 +37,6 @@ namespace GenericApiClient
             return await ApiResponseHandler.HandleRequestAsync<TSuccessResponse, TFailureResponse>(request,contentType);
         }
         
-        // public static async Task<ApiResponse<TSuccessResponse, TFailureResponse>> PostAsync<TSuccessResponse, TFailureResponse>(
-        //     string baseUrl,
-        //     ContentType contentType,
-        //     Dictionary<string, string>? headers = null,
-        //     Dictionary<string, object>? queryParams = null,
-        //     object? body=null)
-        //     where TSuccessResponse : class
-        //     where TFailureResponse : class
-        // {
-        //     var contentTypeStr = contentType.GetMimeType();
-        //     //headers = headers ?? new Dictionary<string, string>();
-        //     //headers["Accept"] = "*/*";
-        //     var uriBuilder = ApiUtils.BuildUri(baseUrl, queryParams);
-        //     var request = ApiUtils.CreateHttpRequest(HttpMethod.Post, uriBuilder.Uri, contentTypeStr, headers);
-        //
-        //     object serializedBody = ContentSerializer.SerializeBody(body, contentType);
-        //     request.Content = ApiUtils.CreateHttpContent(serializedBody, contentTypeStr);
-        //
-        //     return await ApiResponseHandler.HandleRequestAsync<TSuccessResponse, TFailureResponse>(request,contentType);
-        // }
-        
         public static async Task<ApiResponse<TSuccessResponse, TFailureResponse>> PostAsync<TSuccessResponse, TFailureResponse>(
             string baseUrl,
             ContentType contentType,
