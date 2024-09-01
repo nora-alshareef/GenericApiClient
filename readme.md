@@ -126,7 +126,7 @@ var builder = new ApiCallBuilder<List<Product>, ProductsErrorResponse>()()
  {
  var productsCount = response.SuccessResponse?.Count ?? 0;
      logger.LogInformation("[Products] Successfully fetched {@Count} products", productsCount);
- return response.SuccessResponse ?? new List<GetAllPersonsResponse>();
+ return response.SuccessResponse ?? new List<Product>();
  })
 .AddStatusHandler(HttpStatusCode.BadRequest, async response =>
  { 
