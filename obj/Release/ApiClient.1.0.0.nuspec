@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ApiClient</id>
+    <version>1.0.0</version>
+    <authors>ApiClient</authors>
+    <description>Package Description</description>
+    <repository type="git" />
+    <dependencies>
+      <group targetFramework="net8.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="/Users/noraalshareef/RiderProjects/GenericApiClient/ApiClient/bin/Release/net8.0/ApiClient.dll" target="lib/net8.0/ApiClient.dll" />
+  </files>
+</package>
