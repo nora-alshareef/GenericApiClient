@@ -12,10 +12,8 @@ GenericApiClient is a flexible and easy-to-use C# library for making HTTP API ca
    cd GenericApiClient
    dotnet build
    dotnet pack
-   vhdl
 ```
    
-
 ### Add Reference to the Generic API Client DLL
 
 To add a reference to the Generic API Client DLL in your project, follow these steps:
@@ -38,9 +36,40 @@ Alternatively, if you're using the command line or prefer editing the .csproj fi
 
 ### Using ApiClientOperations
 
-The `ApiClientOperations` class is the main entry point for making API calls. It provides methods for GET and POST requests.
+The `ApiClientOperations` class serves as the primary interface for making API calls, providing methods for both GET and POST requests. Before using it, ensure you have prepared the following:
 
-#### GET Request
+- **Success Response**: Test the API using a tool like cURL to verify the success scenario and understand the expected response structure.
+- **Failure Response**: Similarly, check how the API behaves in failure scenarios.
+- **Endpoint**: Know the specific API endpoint you will be calling.
+- **Headers**: Determine any required headers, such as authentication tokens.
+- **Query Parameters**: Identify any parameters needed in the URL.
+- **Request Body**: Prepare the body content if required by the POST request.
+- **Content Type**: Specify the appropriate content type (e.g., JSON, form data).
+
+Here are the method signatures for the GET and POST requests:
+
+#### GET Method Signature
+
+```csharp
+public static async Task<ApiResponse<TSuccessResponse, TFailureResponse>> GetAsync<TSuccessResponse, TFailureResponse>(
+    string baseUrl,
+    ContentType contentType,
+    Dictionary<string, object>? queryParams,
+    Dictionary<string, string>? headers = null)
+```
+
+#### POST Method Signature
+
+```csharp
+public static async Task<ApiResponse<TSuccessResponse, TFailureResponse>> PostAsync<TSuccessResponse, TFailureResponse>(
+    string baseUrl,
+    ContentType contentType,
+    Dictionary<string, string>? headers = null,
+    Dictionary<string, object>? queryParams = null,
+    object? body = null)
+```
+
+#### Example GET Request
 
 ```csharp
 var response = await ApiClientOperations.GetAsync<SuccessResponse, ErrorResponse>(
@@ -50,7 +79,7 @@ var response = await ApiClientOperations.GetAsync<SuccessResponse, ErrorResponse
     null);
 ```
 
-#### POST Request
+#### Example POST Request
 
 ```csharp
 var response = await ApiClientOperations.PostAsync<SuccessResponse, ErrorResponse>(
@@ -79,25 +108,25 @@ The `ApiResponse` object returned by these methods contains:
 
 While `ApiClientOperations` provides a straightforward way to make API calls, `ApiCallBuilder` offers more flexibility in handling responses based on their status.
 
+This builder pattern allows you to customize your API calls by adding various components such as endpoint, method, headers, content type, query parameters, body, and status handlers.
+
 Example usage:
 
 ```csharp
- var queryParams = new Dictionary<string, object>
-    {
-        { "Category", "some category value" },
-        { "InStock", true },
-    };
+
 var builder = new ApiCallBuilder<List<Product>, ProductsErrorResponse>()()
         .SetEndpoint("https://api.example.com/products")
         .SetMethod(HttpMethod.Get)
         .SetContentType(ContentType.ApplicationJson)
         .AddHeader("Authorization", $"Bearer {_config.ApiKey}")
-        .AddQueryParams(queryParams)
+        .AddHeader("headerKey", "headerValue")
+        .AddQueryParam(queryKey1, queryValue1)
+        .AddQueryParam(queryKey2, queryValue2)
         .AddStatusHandler(HttpStatusCode.OK, async response =>
  {
  var productsCount = response.SuccessResponse?.Count ?? 0;
      logger.LogInformation("[Products] Successfully fetched {@Count} products", productsCount);
- return response.SuccessResponse ?? new List<GetAllPersonsResponse>();
+ return response.SuccessResponse ?? new List<Product>();
  })
 .AddStatusHandler(HttpStatusCode.BadRequest, async response =>
  { 
