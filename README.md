@@ -51,6 +51,7 @@ POST requests. Before using it, ensure you have prepared the following:
 - **Query Parameters**: Identify any parameters needed in the URL.
 - **Request Body**: Prepare the body content if required by the POST request.
 - **Content Type**: Specify the appropriate content type (e.g., JSON, form data).
+- **Accept Type**: Specify the appropriate Accept header (e.g., JSON, form data).
 
 Here are the method signatures for the GET and POST requests:
 
@@ -59,7 +60,7 @@ Here are the method signatures for the GET and POST requests:
 ```csharp
 public static async Task<ApiResponse<TSuccessResponse, TFailureResponse>> GetAsync<TSuccessResponse, TFailureResponse>(
     string baseUrl,
-    ContentType contentType,
+    MediaType ContentType,
     Dictionary<string, object>? queryParams,
     Dictionary<string, string>? headers = null)
 ```
@@ -69,18 +70,28 @@ public static async Task<ApiResponse<TSuccessResponse, TFailureResponse>> GetAsy
 ```csharp
 public static async Task<ApiResponse<TSuccessResponse, TFailureResponse>> PostAsync<TSuccessResponse, TFailureResponse>(
     string baseUrl,
-    ContentType contentType,
+    MediaType ContentType,
     Dictionary<string, string>? headers = null,
     Dictionary<string, object>? queryParams = null,
     object? body = null)
 ```
+#### DELETE Method Signature
 
+```csharp
+    public static async Task<ApiResponse<TSuccessResponse, TFailureResponse>> DeleteAsync<TSuccessResponse,TFailureResponse>(
+        string baseUrl,
+        MediaType contentType,
+        MediaType acceptType,
+        Dictionary<string, string>? headers = null,
+        Dictionary<string, object>? queryParams = null
+    )
+```
 #### Example GET Request
 
 ```csharp
 var response = await ApiClientOperations.GetAsync<SuccessResponse, ErrorResponse>(
     endpoint,
-    ContentType.FormUrlEncoded,
+    MediaType.FormUrlEncoded,
     queryParams,
     null);
 ```
@@ -90,9 +101,20 @@ var response = await ApiClientOperations.GetAsync<SuccessResponse, ErrorResponse
 ```csharp
 var response = await ApiClientOperations.PostAsync<SuccessResponse, ErrorResponse>(
     endpoint,
-    ContentType.ApplicationJson,
+    MediaType.ApplicationJson,
+    null,
     null,
     bodyContent);
+```
+
+#### Example DELETE Request
+
+```csharp
+var response = await ApiClientOperations.DeleteAsync<SuccessResponse, ErrorResponse>(
+    endpoint,
+    MediaType.ApplicationJson,
+    null,
+    queryParams);
 ```
 
 ### ApiResponse Structure
@@ -125,7 +147,8 @@ Example usage:
 var builder = new ApiCallBuilder<List<Product>, ProductsErrorResponse>()()
         .SetEndpoint("https://api.example.com/products")
         .SetMethod(HttpMethod.Get)
-        .SetContentType(ContentType.ApplicationJson)
+        .SetContentType(MediaType.ApplicationJson)
+        .SetAcceptType(MediaType.ApplicationJson)
         .AddHeader("Authorization", $"Bearer {_config.ApiKey}")
         .AddHeader("headerKey", "headerValue")
         .AddQueryParam(queryKey1, queryValue1)
