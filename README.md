@@ -1,8 +1,10 @@
 # GenericApiClient
 
-GenericApiClient is a flexible and easy-to-use C# library for making HTTP API calls. It provides a simple interface for sending GET and POST requests, handling responses, and managing content types.
+GenericApiClient is a flexible and easy-to-use C# library for making HTTP API calls. It provides a simple interface for
+sending GET and POST requests, handling responses, and managing content types.
 
 ## Installation
+
 ### Build and Use the Library
 
 1. Clone and build the repository:
@@ -13,7 +15,7 @@ GenericApiClient is a flexible and easy-to-use C# library for making HTTP API ca
    dotnet build
    dotnet pack
 ```
-   
+
 ### Add Reference to the Generic API Client DLL
 
 To add a reference to the Generic API Client DLL in your project, follow these steps:
@@ -25,20 +27,24 @@ To add a reference to the Generic API Client DLL in your project, follow these s
 5. Select the DLL file (e.g., "GenericApiClient.dll") and click "Add".
 6. Click "OK" in the Reference Manager dialog to confirm.
 
-Alternatively, if you're using the command line or prefer editing the .csproj file directly, you can add the following line within an `<ItemGroup>` in your project file:
+Alternatively, if you're using the command line or prefer editing the .csproj file directly, you can add the following
+line within an `<ItemGroup>` in your project file:
 
 ```xml
 <Reference Include="GenericApiClient">
  <HintPath>path\to\GenericApiClient.dll</HintPath>
 </Reference>
 ```
+
 ## Usage
 
 ### Using ApiClientOperations
 
-The `ApiClientOperations` class serves as the primary interface for making API calls, providing methods for both GET and POST requests. Before using it, ensure you have prepared the following:
+The `ApiClientOperations` class serves as the primary interface for making API calls, providing methods for both GET and
+POST requests. Before using it, ensure you have prepared the following:
 
-- **Success Response**: Test the API using a tool like cURL to verify the success scenario and understand the expected response structure.
+- **Success Response**: Test the API using a tool like cURL to verify the success scenario and understand the expected
+  response structure.
 - **Failure Response**: Similarly, check how the API behaves in failure scenarios.
 - **Endpoint**: Know the specific API endpoint you will be calling.
 - **Headers**: Determine any required headers, such as authentication tokens.
@@ -106,9 +112,11 @@ The `ApiResponse` object returned by these methods contains:
 
 ### Using ApiCallBuilder (Recommended)
 
-While `ApiClientOperations` provides a straightforward way to make API calls, `ApiCallBuilder` offers more flexibility in handling responses based on their status.
+While `ApiClientOperations` provides a straightforward way to make API calls, `ApiCallBuilder` offers more flexibility
+in handling responses based on their status.
 
-This builder pattern allows you to customize your API calls by adding various components such as endpoint, method, headers, content type, query parameters, body, and status handlers.
+This builder pattern allows you to customize your API calls by adding various components such as endpoint, method,
+headers, content type, query parameters, body, and status handlers.
 
 Example usage:
 
@@ -152,7 +160,8 @@ public class ProductsErrorResponse
 }
 ```
 
-The `ApiCallBuilder` allows you to chain methods to configure your API call, and then execute it with full control over how you handle the response.
+The `ApiCallBuilder` allows you to chain methods to configure your API call, and then execute it with full control over
+how you handle the response.
 
 ## Features
 
